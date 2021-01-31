@@ -1,5 +1,5 @@
 {
-  "name": "pet-watcher-api",
+  "name": "recordtrack.net-api",
   "version": "1.0.0",
   "description": "Api For ",
   "main": "./dist/app.js",
@@ -10,7 +10,6 @@
   },
   "author": "Christopher Arias",
   "license": "ISC",
-  "repository": "https://github.com/christopherariasjr/pet-watcher-api.git",
   "dependencies": {
     "@types/express": "^4.17.11",
     "bcrypt": "^5.0.0",

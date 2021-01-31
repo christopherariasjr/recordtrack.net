@@ -6,13 +6,20 @@ var UserSchema: Schema = new db.Schema({
     'password':{type: String, require: true},
     'first_name':{type: String, require: true},
     'last_name':{type: String, require: true},
-    'profile_picture':String,
+    'profile_picture_id':String,
     'joined':{type: Date, require: true},
-    'pets':[
+    'last_login': Date,
+    'records':[
         {
-            'pet_id': String,
+            'record_id': String,
+            'purchase_price': Number
         }
-    ]
+    ],
+    'role': {
+        type: String,
+        default: 'basic',
+        enum: ["basic", "admin", "developer"]
+    }
 });
 
 export default db.model("User", UserSchema)

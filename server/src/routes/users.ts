@@ -1,9 +1,9 @@
 import * as express from 'express';
-const Router = express.Router();
+const router = express.Router();
 import User from '../models/User'
 import * as bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
-import { checkPassword, checkEmailExists, getProfile } from '../services/profile'
+import { checkPassword, checkEmailExists, getProfile, setlastLogin } from '../services/profile'
 import { createToken, authenticateToken } from '../services/token'
 
 dotenv.config()
@@ -11,13 +11,13 @@ dotenv.config()
 var salt = parseInt(process.env.SALT)
 
 //Login to account
-Router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     let email: string       = req.body.email;
     let password: string    =  req.body.password;
 
     let emailResult = await checkEmailExists(email);
     let pwdResult = await checkPassword(email, password)
-
+    
     if(!emailResult) {
         res.status(400).send('Email does not exist');
     }
@@ -34,10 +34,12 @@ Router.post('/login', async (req, res) => {
     }
     
     res.send(token)
+    await setlastLogin(email);
+    return
 })
 
 //Creates new user
-Router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     var email: string       = req.body.email;
     var password: string    = req.body.password;
     var firstName: string   = req.body.first_name;
@@ -83,14 +85,14 @@ Router.post('/', async (req, res) => {
 });
 
 //edits account info
-Router.patch('/', authenticateToken, (req, res) => {
+router.patch('/', authenticateToken, (req, res) => {
     res.send('Patch User');
 });
 
-Router.get('/profile', authenticateToken, async (req, res) => {
+router.get('/profile', authenticateToken, async (req, res) => {
 
 })
 
 
-var user = Router
-export default user
+
+export default router

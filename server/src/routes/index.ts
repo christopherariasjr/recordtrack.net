@@ -1,12 +1,12 @@
 import * as express from 'express';
 
-const Router = express.Router()
+const router = express.Router()
 
 /***PATHS***/
-import users from './users'
-import pets from './pets'
+import * as users from './users'
+import * as records from './records'
 
-Router.use('/users', users);
-Router.use('/pets', pets);
+router.use('/users', users);
+router.use('/records', records);
 
-export default Router
+export default router
